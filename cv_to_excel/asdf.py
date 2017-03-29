@@ -25,8 +25,8 @@ def find_powers(num) :
 
     print num
 
-    cell_is_A=0
-    if num==0 : cell_is_A=1
+    #cell_is_A=0
+    #if num==0 : cell_is_A=1
 
 
     ##num is now a regular integer.
@@ -84,8 +84,8 @@ def find_powers(num) :
     worksheet.write('A2', 'World', bold)
 
     # Write some numbers, with row/column notation.
-    worksheet.write(2, 0, 123)
-    worksheet.write(3, 0, 123.456)
+    worksheet.write(1, 1, 123)
+    worksheet.write(3, 1, 123.456)
 
     merge_format = workbook.add_format({
         'bold': 1,
@@ -106,7 +106,15 @@ def find_powers(num) :
     #col = [54,21,168,74]
     #row = [27,39,17]
 
+    def write_values(values) :
+
+        #given a 2-dimensional array "values"
+
+        for i in range(len(values)) :
+            for j in range(len(values[i]))
+                worksheet.write(i,j,values[i,j])
+
 
 #-----------------------------------------------------------
 
-find_powers(202)
+find_powers(1)
