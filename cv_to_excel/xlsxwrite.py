@@ -7,7 +7,7 @@
 import math
 base26 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
-def find_powers(num) :
+def num2char(num) :
     i = 1
     counter = 1
     while num >= i:
@@ -30,6 +30,64 @@ def find_powers(num) :
 
     return cell + ":" + cell
 
+def char2num(char) :
+
+    # xlsxwriter supports excel's worksheet limits of 1,048,576 rows by 16,384 columns.
+
+    value = 0
+
+    cols = ""
+    rows = ""
+
+    counter = 0
+
+    while cols == "" and rows == "" :
+        if char[counter] == '0' or char[counter] == '1' or char[counter] == '2' or char[counter] == '3' or char[counter] == '4' or char[counter] == '5' or char[counter] == '6' or char[counter] == '7' or char[counter] == '8' or char[counter] == '9' :
+            cols = char.split(char[counter],1)[0]
+            rows = char[counter] + char.split(char[counter],1)[1]
+        counter += 1
+
+    print cols
+    print rows
+
+    #max excel length
+    value += (2**20) * int(rows)
+
+    def f(x):
+        return {
+            'A': 1,
+            'B': 2,
+            'C': 3,
+            'D': 4,
+            'E': 5,
+            'F': 6,
+            'G': 7,
+            'H': 8,
+            'I': 9,
+            'J': 10,
+            'K': 11,
+            'L': 12,
+            'M': 13,
+            'N': 14,
+            'O': 15,
+            'P': 16,
+            'Q': 17,
+            'R': 18,
+            'S': 19,
+            'T': 20,
+            'U': 21,
+            'V': 22,
+            'W': 23,
+            'X': 24,
+            'Y': 25,
+            'Z': 26
+        }[x]
+
+    for i in range(len(cols)) :
+        value += (26**i)*f(cols[len(cols)-i-1])
+
+    print value
+
 import xlsxwriter
 
 temp = ""
@@ -48,8 +106,9 @@ def out(rowheights, columnwidths) :
         worksheet.set_row(i, rowheights[i])
 
     for j in range(len(columnwidths)) :
-        print find_powers(j+1)
-        worksheet.set_column(find_powers(j+1), columnwidths[j])
+        worksheet.set_column(num2char(j+1), columnwidths[j])
+
+
 
 
 
@@ -70,6 +129,8 @@ def out(rowheights, columnwidths) :
 
 # Merge 3 cells.
 # worksheet.merge_range('B4:E9', 'Merged Range', merge_format)
+
+char2num('ABHA183')
 
 out(row, col)
 
