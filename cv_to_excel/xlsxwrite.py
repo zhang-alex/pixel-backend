@@ -47,9 +47,6 @@ def char2num(char) :
             rows = char[counter] + char.split(char[counter],1)[1]
         counter += 1
 
-    print cols
-    print rows
-
     #max excel length
     value += (2**20) * int(rows)
 
@@ -86,7 +83,7 @@ def char2num(char) :
     for i in range(len(cols)) :
         value += (26**i)*f(cols[len(cols)-i-1])
 
-    print value
+    return value
 
 import xlsxwriter
 
@@ -97,16 +94,78 @@ workbook = xlsxwriter.Workbook('demo.xlsx')
 worksheet = workbook.add_worksheet()
 
 
-col = [54,21,168,74]
-row = [27,39,17]
+default_format = workbook.add_format({
+     'align': 'center',
+     'valign': 'vcenter',
+})
 
-def out(rowheights, columnwidths) :
+cell_vals = []
+
+def out(rowheights, columnwidths, values) :
+
+    cell_vals[:] = []
 
     for i in range(len(rowheights)) :
         worksheet.set_row(i, rowheights[i])
 
     for j in range(len(columnwidths)) :
         worksheet.set_column(num2char(j+1), columnwidths[j])
+
+
+
+
+    for l in range(len(values)) :
+        if len(values[l]) == 2:
+            worksheet.write(values[l][0],values[l][1], default_format)
+        else :
+            for k in range(len(values[l])-1) : #0,1,2
+                print char2num(values[l][k])
+                cell_vals.append(char2num(values[l][k]))
+
+            print "sorted"
+            print  cell_vals
+
+            new_cell_vals = sorted(cell_vals)
+
+            smallest = 0
+            largest = 0
+
+            print new_cell_vals
+
+            smallest = new_cell_vals[0]
+            largest = new_cell_vals[len(new_cell_vals)-1]
+
+            for i in range(len(cell_vals)) :
+                if smallest == cell_vals[i] :
+                    smallest = i
+                elif largest == cell_vals[i] :
+                    largest = i
+
+            print smallest
+            print largest
+
+            asdf = str(values[l][smallest]) + ":" + str(values[l][largest])
+            print asdf
+
+
+
+
+
+
+
+
+
+
+col = [20,25,30,35,40,45,50,55,60,65,70,75]
+row = [30,40,50,60,70,80,90,100,110,120,130]
+
+hello = [('A1','B2','A3','C4','A4','C2','B1','C3','B3','C1','B4','A2',"First entry")] #, ('A5',"Second entry")
+
+out(row, col, hello)
+
+
+
+workbook.close()
 
 
 
@@ -122,19 +181,10 @@ def out(rowheights, columnwidths) :
 # worksheet.write(2, 0, 123)
 # worksheet.write(3, 0, 123.456)
 
-# merge_format = workbook.add_format({
-#     'align': 'center',
-#     'valign': 'vcenter',
-# })
+
 
 # Merge 3 cells.
 # worksheet.merge_range('B4:E9', 'Merged Range', merge_format)
-
-char2num('ABHA183')
-
-out(row, col)
-
-workbook.close()
 
 #rows[]
 
