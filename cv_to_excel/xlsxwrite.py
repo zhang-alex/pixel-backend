@@ -115,11 +115,14 @@ def out(rowheights, columnwidths, values) :
 
 
     for l in range(len(values)) :
+
+        cell_vals[:] = []
+
+        print ""
         if len(values[l]) == 2:
             worksheet.write(values[l][0],values[l][1], default_format)
         else :
             for k in range(len(values[l])-1) : #0,1,2
-                print char2num(values[l][k])
                 cell_vals.append(char2num(values[l][k]))
 
             print "sorted"
@@ -135,6 +138,9 @@ def out(rowheights, columnwidths, values) :
             smallest = new_cell_vals[0]
             largest = new_cell_vals[len(new_cell_vals)-1]
 
+            print "smallest:", smallest
+            print "largest:", largest
+
             for i in range(len(cell_vals)) :
                 if smallest == cell_vals[i] :
                     smallest = i
@@ -145,7 +151,8 @@ def out(rowheights, columnwidths, values) :
             print largest
 
             asdf = str(values[l][smallest]) + ":" + str(values[l][largest])
-            print asdf
+
+            worksheet.merge_range(asdf, values[l][len(values[l])-1], default_format)
 
 
 
@@ -156,12 +163,10 @@ def out(rowheights, columnwidths, values) :
 
 
 
-col = [20,25,30,35,40,45,50,55,60,65,70,75]
-row = [30,40,50,60,70,80,90,100,110,120,130]
-
-hello = [('A1','B2','A3','C4','A4','C2','B1','C3','B3','C1','B4','A2',"First entry")] #, ('A5',"Second entry")
-
-out(row, col, hello)
+##col = [20,25,30,35,40,45,50,55,60,65,70,75]
+##row = [30,40,50,60,70,80,90,100,110,120,130]
+##hello = [('A1','B2','A3','C4','A4','C2','B1','C3','B3','C1','B4','A2',"First entry"), ('D5',"Second entry"), ('E7','F8','E8','F7',"second merge")]
+##out(row, col, hello)
 
 
 
