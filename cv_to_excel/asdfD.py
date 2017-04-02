@@ -21,4 +21,7 @@ def find_powers(num) :
     for i in range(len(base10_26)) :
         cell += base26[base10_26[i]]
     print "cell:",cell
-find_powers(702)
+    return cell
+
+
+asdf = find_powers(702) + ":" + find_powers(702)
