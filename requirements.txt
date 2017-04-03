@@ -1,3 +1,6 @@
-setuptools==34.3.2
+setuptools>=34.3.2
 numpy==1.11.0
 xlsxwriter==0.9.6
+pillow==4.0.0
+opencv-python==3.2.0.6
+pytesseract==0.1.6
