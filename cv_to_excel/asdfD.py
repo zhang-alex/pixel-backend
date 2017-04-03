@@ -1,27 +1,19 @@
-import math
-base26 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-def find_powers(num) :
-    i = 1
-    counter = 1
-    while num >= i:
-        i += 26**counter
-        counter += 1
-    digits = counter - 1
-    for i in range(digits) :
-        num -= 26**i
-    cell_is_A=0
-    if num==0 : cell_is_A=1
-    base10_26 = []
-    for i in range(digits) :
-        base10_26.append(0)
-        temp_quotient = int(num/(26**(digits-1-i)))
-        num -= (26**(digits-1-i)) * temp_quotient
-        base10_26[i] += temp_quotient
-    cell = ""
-    for i in range(len(base10_26)) :
-        cell += base26[base10_26[i]]
-    print "cell:",cell
-    return cell
+import re
 
+def char2num(char):
+    def toExcelCol(y):
+        q,r=divmod(y-1,26)
+        return toExcelCol(q)+chr(r+ord('A')) if y!=0 else ''
+    def toIdx(y):
+        s,p=0,1
+        for c in y[::-1]:
+            s+=p*(int(c,36)-9)
+            p*=26
+        return s
+    mn_c=toExcelCol(min(toIdx(re.split('(\D+)',c)[1]) for c in char))
+    mx_c=toExcelCol(max(toIdx(re.split('(\D+)',c)[1]) for c in char))
+    mn_r=str(min(re.split('(\D+)',c)[2] for c in char))
+    mx_r=str(max(re.split('(\D+)',c)[2] for c in char))
+    return mn_c+mn_r+":"+mx_c+mx_r
 
-asdf = find_powers(702) + ":" + find_powers(702)
+print char2num(['A1','B1','A2','B2'])
